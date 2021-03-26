@@ -1,0 +1,65 @@
+
+.UIButton-Container {
+    background-color: rgb(255, 115, 0);
+    background: linear-gradient(147deg, rgb(255, 216, 101) 0%, rgb(255, 214, 52) 100%);
+
+    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+
+    padding-left: 30px;
+    padding-right: 30px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: rgb(180, 81, 0);
+
+    min-width: 30px;
+    min-height: 20px;
+
+    text-align: center;
+    text-anchor: middle;
+
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+
+    font-family: 'Permanent Marker';
+    font-size: 16px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transition: all .05s ease-in-out;
+}
+
+.UIButton-Container:hover {
+    
+    cursor: pointer;
+
+    background: rgb(255,233,164);
+    background: linear-gradient(180deg, rgba(255,233,164,1) 0%, rgba(255,245,213,1) 25%, rgba(255,230,128,1) 100%);
+
+    box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+
+    transform: scale(1.01);
+    
+}
+
+.UIButton-Container:active {
+    
+    cursor: pointer;
+
+    background: rgb(192, 144, 0);
+    background: linear-gradient(180deg, rgb(187, 140, 0) 0%, rgb(167, 128, 0) 25%, rgbrgb(179, 143, 0)0%);
+
+    box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+
+    transform: scale(0.95);
+    
+}

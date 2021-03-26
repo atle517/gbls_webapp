@@ -1,0 +1,16 @@
+
+.Container {
+    background-color: rgb(255, 159, 80);
+    
+}
+
+.NavBar-End {
+    margin-right: 0;
+    margin-left: auto;
+
+    font-size: x-large;
+
+    display: flex;
+    flex-direction: row;
+    
+}

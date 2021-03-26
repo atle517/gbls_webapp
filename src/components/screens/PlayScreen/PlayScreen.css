@@ -1,0 +1,51 @@
+
+.PlayScreen-Main {
+    display: flex;
+
+    width: 60vw;
+    height: 60vh;
+}
+
+.PlayScreen-Quiz-List {
+    display: flex;
+    flex: 3;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0px 20px 0px 0px;
+
+    /* outline-style: solid; */
+}
+
+.PlayScreen-Quiz-Info {
+    display: flex;
+    flex: 2;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    /* outline-style: solid; */
+    transition: all .05s ease-in-out;
+}
+
+.PlayScreen-Quiz-Desc {
+    width: 98%;
+
+    padding: 5px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: rgb(180, 81, 0);
+
+    background-color: rgb(255, 115, 0);
+    background: linear-gradient(147deg, rgb(255, 223, 127) 0%, rgb(255, 239, 174) 100%);
+
+}
