@@ -12,51 +12,8 @@ export default class PlayScreen extends Component {
         super(props)
 
         this.state = {
-            quizs: [],
-            users: [],
             selectedQuiz: null,
         }
-
-    }
-
-    componentDidMount() {
-        this.fetchQuiz();
-        this.fetchUsers();
-    }
-
-    fetchQuiz = () => {
-        const requestOptions = {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            dataType: "json",
-        };
-
-        fetch(process.env.REACT_APP_API_URL + "/Quizs", requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ quizs: data });
-            });
-    }
-
-    fetchUsers = () => {
-        const requestOptions = {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            dataType: "json",
-        };
-
-        fetch(process.env.REACT_APP_API_URL + "/Users/GetUserIdList", requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ users: data });
-            });
-    }
-
-    getUserName = id => {
-        let userList = this.state.users;
-        let user = userList.filter(u => u.userID == id)[0];
-
-        return (user !== undefined) ? user.username : null;
 
     }
 
@@ -64,11 +21,10 @@ export default class PlayScreen extends Component {
         this.setState({ selectedQuiz: quiz });
     }
 
-
-
     render() {
 
-        const { quizs, selectedQuiz } = this.state;
+        const { quizs } = this.props;
+        const { selectedQuiz } = this.state;
 
         return (
             <Spring
@@ -97,7 +53,7 @@ export default class PlayScreen extends Component {
                                             key={quiz.quizID}
                                             quiz={quiz}
                                             highscore={10}
-                                            getUserName={this.getUserName}
+                                            getUserName={this.props.getUserName}
                                             setSelectedQuiz={this.setSelectedQuiz}
                                             selected={(this.state.selectedQuiz === quiz ? true : false)}
                                         />
@@ -111,23 +67,24 @@ export default class PlayScreen extends Component {
 
                                     <div style={{ width: '100%', height: '100%' }}>
                                         Description:
-                             <div className="PlayScreen-Quiz-Desc" style={{ height: 100, marginBottom: 5 }}>
+                                         <div className="PlayScreen-Quiz-Desc" style={{ height: 100, marginBottom: 5 }}>
                                             {selectedQuiz ? selectedQuiz.description : ""}
                                         </div>
 
-                            Top scores:
-                            <div className="PlayScreen-Quiz-Desc" style={{ height: 100, marginBottom: 5 }}>
+                                        Top scores:
+                                        <div className="PlayScreen-Quiz-Desc" style={{ height: 100, marginBottom: 5 }}>
                                             {selectedQuiz ? selectedQuiz.questions.length : ""}
                                         </div>
 
-                            Rating:
-                            <div className="PlayScreen-Quiz-Desc" style={{ height: 60, marginBottom: 5 }}>
+                                        Rating:
+                                        <div className="PlayScreen-Quiz-Desc" style={{ height: 60, marginBottom: 5 }}>
 
                                         </div>
                                     </div>
 
-                                    <UIButton title={"Play!"} width={150} height={40} fontSize={32} />
-
+                                    {selectedQuiz &&
+                                        <UIButton title={"Play!"} width={150} height={40} fontSize={32} onClick={() => this.props.startQuiz(selectedQuiz)} />
+                                    }
 
 
                                 </div>

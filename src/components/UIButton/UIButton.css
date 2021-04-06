@@ -35,6 +35,8 @@
     align-items: center;
     justify-content: center;
 
+    overflow: hidden;
+
     transition: all .05s ease-in-out;
 }
 
