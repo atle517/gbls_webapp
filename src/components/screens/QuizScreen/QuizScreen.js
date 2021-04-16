@@ -50,6 +50,7 @@ export default class QuizScreen extends Component {
             answered: false,
             answeredButtonId: null,
             points: 0,
+            rightAnswers: 0,
 
         }
 
@@ -92,9 +93,9 @@ export default class QuizScreen extends Component {
         }
 
         const nextQuestionInterval = setInterval(() => {
-            if (this.state.questionId + 1 < this.props.quiz.questions.length){
+            if (this.state.questionId + 1 < this.props.quiz.questions.length) {
                 this.setNextQuestion();
-            }else{
+            } else {
                 this.finishQuiz();
             }
 
@@ -104,11 +105,14 @@ export default class QuizScreen extends Component {
     }
 
     finishQuiz = () => {
-        this.props.setScreen('QuizDone');
+        this.props.answeredQuiz(this.state.points, this.state.rightAnswers, this.props.quiz)
     }
 
     addPoints = points => {
-        this.setState(prevState => ({ points: prevState.points + points }));
+        this.setState(prevState => ({
+            points: prevState.points + points,
+            rightAnswers: prevState.rightAnswers + 1
+        }));
     }
 
     showButtonColor = (correct, buttonId) => {

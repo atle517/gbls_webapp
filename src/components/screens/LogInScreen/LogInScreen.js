@@ -46,7 +46,7 @@ export default class LogInScreen extends Component {
     }
 
     succesful = userData => {
-        this.props.login(userData.username, userData.userID);
+        this.props.login(userData.username, userData.Id);
     }
 
     render() {
@@ -94,13 +94,13 @@ export default class LogInScreen extends Component {
                                     style={{ marginTop: 3, marginBottom: 10 }}
                                 />
 
-                                {this.state.errorMessage !== '' && <div className="LogInScreen-Text" style={{ color: 'red', textAlign: 'center' }}>{this.state.errorMessage}<br/><br/></div>}
+                                {this.state.errorMessage !== '' && <div className="LogInScreen-Text" style={{ color: 'red', textAlign: 'center' }}>{this.state.errorMessage}<br /><br /></div>}
 
                                 {/* <Button type="submit" variant="contained" disableElevation color="primary" style={{ backgroundColor: '#3396FF' }}>
                                     Log In
                                 </Button> */}
 
-                                <UIButton title={"Log In"} fontSize={24} onClick={this.handleSubmit}/>
+                                <UIButton title={"Log In"} fontSize={24} onClick={this.handleSubmit} />
                             </form>
                         </UIBlock>
                     </div>

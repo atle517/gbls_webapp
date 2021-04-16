@@ -1,3 +1,4 @@
+import { FlashOffRounded } from '@material-ui/icons';
 import React, { Component } from 'react'
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
@@ -13,11 +14,12 @@ class App extends Component {
     super(props);
 
     this.state = {
-      screen: 'Quiz',
+      screen: 'LogIn',
       user: null,
       quizs: [],
       selectedQuiz: null,
       users: [],
+      answeredQuiz: null,
     };
   }
 
@@ -92,6 +94,43 @@ class App extends Component {
     });
   }
 
+  answeredQuiz = (points, rightAnswers, quiz) => {
+
+    this.postScore(this.state.user.userId, points, quiz.quizID);
+
+    this.setState({
+      answeredQuiz: {
+        points,
+        rightAnswers,
+        quiz
+      }
+    }, () => this.setScreen('QuizDone'));
+  }
+
+  postScore = (userID, points, quizID) => {
+
+    console.log(`POST: USER: ${userID}, POINTS: ${points}, QUIZID: ${quizID}`)
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      dataType: "json",
+      body: JSON.stringify({ UserID: userID, QuizID: quizID, UserScore: points })
+    };
+
+    fetch(process.env.REACT_APP_API_URL + `/Scores`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.Message !== undefined && data.Message === "Higher score found!") {
+          this.setState({ newHighScore: false })
+        } else {
+          console.log('New highscore')
+          this.setState({ newHighScore: true })
+        }
+      });
+
+  }
+
   render() {
     return (
       <div className="App">
@@ -117,13 +156,19 @@ class App extends Component {
 
           {this.state.screen === 'Quiz' && this.state.quizs.length > 0 &&
             <QuizScreen
-              quiz={this.state.quizs[0]}
-              setScreen={this.setScreen}
+              quiz={this.state.selectedQuiz}
+              answeredQuiz={this.answeredQuiz}
             />
           }
 
-          {this.state.screen === 'QuizDone' &&
-            < QuizDoneScreen />
+          {this.state.screen === 'QuizDone' && this.state.answeredQuiz &&
+            <QuizDoneScreen
+              points={this.state.answeredQuiz.points}
+              rightAnswers={this.state.answeredQuiz.rightAnswers}
+              totalQuestions={this.state.answeredQuiz.quiz.questions.length}
+              newHighScore={this.state.newHighScore}
+              setScreen={this.setScreen}
+            />
           }
 
           {/* LogInScreen */}
