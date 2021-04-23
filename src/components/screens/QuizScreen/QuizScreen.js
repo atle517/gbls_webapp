@@ -9,7 +9,7 @@ import tickSound from '../../../sounds/Tick.ogg'
 import correctSound from '../../../sounds/Correct.ogg'
 import wrongSound from '../../../sounds/Wrong.ogg'
 
-const tickSoundOn = false;
+const tickSoundOn = true;
 const timeDuration = 30;
 
 const tickSoundEffect = new UIfx(

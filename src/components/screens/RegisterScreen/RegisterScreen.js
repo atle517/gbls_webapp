@@ -31,7 +31,7 @@ export default class RegisterScreen extends Component {
             }
 
             // Check that the password is long enough
-            if (this.state.username.length < 6) {
+            if (this.state.password.length < 6) {
                 this.setState({ errorMessage: 'Password is too short!\r\nMust be above 6 characters!' });
                 return;
             }

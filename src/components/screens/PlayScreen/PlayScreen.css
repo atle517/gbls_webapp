@@ -49,3 +49,19 @@
     background: linear-gradient(147deg, rgb(255, 223, 127) 0%, rgb(255, 239, 174) 100%);
 
 }
+
+.PlayScreen-Header-Text {
+    font-family: 'Permanent Marker';
+
+    color: rgb(49, 49, 49);
+    font-size: 12x;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table tr:nth-of-type(even) {
+    background-color: #fff9e7;
+}

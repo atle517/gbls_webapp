@@ -39,6 +39,8 @@ class App extends Component {
         userId
       }
     });
+
+    if (this.state.users.filter(u => u.userID == userId).length === 0) this.fetchUsers();
   }
 
   login = (username, userId) => {
@@ -109,8 +111,6 @@ class App extends Component {
 
   postScore = (userID, points, quizID) => {
 
-    console.log(`POST: USER: ${userID}, POINTS: ${points}, QUIZID: ${quizID}`)
-
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -124,7 +124,6 @@ class App extends Component {
         if (data.Message !== undefined && data.Message === "Higher score found!") {
           this.setState({ newHighScore: false })
         } else {
-          console.log('New highscore')
           this.setState({ newHighScore: true })
         }
       });
@@ -149,6 +148,7 @@ class App extends Component {
             <PlayScreen
               quizs={this.state.quizs}
               users={this.state.users}
+              userId={this.state.user.userId}
               getUserName={this.getUserName}
               startQuiz={this.startQuiz}
             />
@@ -168,6 +168,8 @@ class App extends Component {
               totalQuestions={this.state.answeredQuiz.quiz.questions.length}
               newHighScore={this.state.newHighScore}
               setScreen={this.setScreen}
+              quizId={this.state.answeredQuiz.quiz.quizID}
+              userId={this.state.user.userId}
             />
           }
 
