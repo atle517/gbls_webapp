@@ -23,15 +23,18 @@ class App extends Component {
     };
   }
 
+  // When component mounts, fetch both quiz and users
   componentDidMount() {
     this.fetchQuiz();
     this.fetchUsers();
   }
 
+  // Sets the app screen
   setScreen = screen => {
     this.setState({ screen });
   }
 
+  // Sets logged in user
   setUser = (username, userId) => {
     this.setState({
       user: {
@@ -40,19 +43,23 @@ class App extends Component {
       }
     });
 
+    // If it can't find the user in the list, fetch the user list again
     if (this.state.users.filter(u => u.userID == userId).length === 0) this.fetchUsers();
   }
 
+  // Logs in the user and goes to the Play Screen
   login = (username, userId) => {
     this.setUser(username, userId);
     this.setScreen('Play');
   }
 
+  // Logs the user out and redirects back to the login screen
   logout = () => {
     this.setState({ user: null });
     this.setScreen('LogIn');
   }
 
+  // Fetches quizes from the api/db
   fetchQuiz = () => {
     const requestOptions = {
       method: 'GET',
@@ -67,6 +74,7 @@ class App extends Component {
       });
   }
 
+  // Fetches users from the api/db
   fetchUsers = () => {
     const requestOptions = {
       method: 'GET',
@@ -81,6 +89,7 @@ class App extends Component {
       });
   }
 
+  // Gets an users username based on their userId
   getUserName = id => {
     let userList = this.state.users;
     let user = userList.filter(u => u.userID == id)[0];
@@ -89,6 +98,7 @@ class App extends Component {
 
   }
 
+  // Starts the quiz
   startQuiz = quiz => {
     this.setState({
       screen: 'Quiz',
@@ -96,10 +106,13 @@ class App extends Component {
     });
   }
 
+  // Finishes the quiz
   answeredQuiz = (points, rightAnswers, quiz) => {
 
+    // Post new score
     this.postScore(this.state.user.userId, points, quiz.quizID);
 
+    // Set state and go to QuizDone Screen
     this.setState({
       answeredQuiz: {
         points,
@@ -109,6 +122,7 @@ class App extends Component {
     }, () => this.setScreen('QuizDone'));
   }
 
+  // Posts the score to the api/db
   postScore = (userID, points, quizID) => {
 
     const requestOptions = {
@@ -118,9 +132,11 @@ class App extends Component {
       body: JSON.stringify({ UserID: userID, QuizID: quizID, UserScore: points })
     };
 
+    // Post score
     fetch(process.env.REACT_APP_API_URL + `/Scores`, requestOptions)
       .then(response => response.json())
       .then(data => {
+        // Check for a new Highscore
         if (data.Message !== undefined && data.Message === "Higher score found!") {
           this.setState({ newHighScore: false })
         } else {
@@ -154,6 +170,7 @@ class App extends Component {
             />
           }
 
+          {/* QuizScreen */}
           {this.state.screen === 'Quiz' && this.state.quizs.length > 0 &&
             <QuizScreen
               quiz={this.state.selectedQuiz}
@@ -161,6 +178,7 @@ class App extends Component {
             />
           }
 
+          {/* QuizDone Screen */}
           {this.state.screen === 'QuizDone' && this.state.answeredQuiz &&
             <QuizDoneScreen
               points={this.state.answeredQuiz.points}

@@ -7,6 +7,7 @@ export default class QuizListItem extends Component {
 
         const { quiz, getUserName, selected } = this.props;
 
+        // Returns a quiz list item
         return (
             <div className={selected ? "QuizListItem-Main-Selected" : "QuizListItem-Main"} onClick={() => this.props.setSelectedQuiz(quiz)}>
                 <div style={{display: 'flex', flex: '4'}}>{quiz.quizName}</div>

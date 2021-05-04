@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './NavBar.css';
-import { AppBar, IconButton, Toolbar, Typography, Button } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 
 export default class NavBar extends Component {
     render() {
@@ -9,31 +9,27 @@ export default class NavBar extends Component {
                 <div className="Container">
                     <Toolbar color="red">
 
+                        {/* Logo */}
                         <Typography variant="h4" style={{ fontFamily: 'Permanent Marker', color: 'white' }}>
                             Gamebased Learning System
                         </Typography>
 
+                        {/* About button */}
                         <div className="NavBar-End">
-                            {/* {this.props.screen === 'Play' && */}
-                                {/* <div> */}
-                                    {/* <IconButton color="inherit"> */}
-                                        {/* <PlayArrowIcon fontSize="large" /> */}
-                                        {/* Play */}
-                                    {/* </IconButton> */}
-
-                            {/* | */}
-                            {/* </div>} */}
-
                             <div>
-                                <IconButton color="inherit">
+                                <IconButton color="inherit"
+                                    target="_blank" href="https://web01.usn.no/~222027/"
+                                >
                                     {/* <InfoIcon fontSize="large" /> */}
                                     About
                                 </IconButton>
                             |
                             </div>
 
+                            {/* User button */}
                             {this.props.user !== null ?
                                 <div>
+                                    {/* If logged in, show logout button */}
                                     <IconButton edge="end" color="inherit" onClick={() => this.props.logout()}>
                                         {/* <ExitToAppIcon fontSize="large" /> */}
                                         Log Out
@@ -42,30 +38,26 @@ export default class NavBar extends Component {
                                 :
 
                                 (this.props.screen === "LogIn") ?
-                                
-                                <div>
-                                    <IconButton edge="end" color="inherit" onClick={() => this.props.setScreen('Register')}>
-                                        {/* <AccountCircleIcon fontSize="large" /> */}
+                                    <div>
+                                        {/* If on login screen, show register button */}
+                                        <IconButton edge="end" color="inherit" onClick={() => this.props.setScreen('Register')}>
+                                            {/* <AccountCircleIcon fontSize="large" /> */}
                                         Register
                                     </IconButton>
-                                </div>:
+                                    </div> :
 
-
-
-                                <div>
-                                    <IconButton edge="end" color="inherit" onClick={() => this.props.setScreen('LogIn')}>
-                                        {/* <AccountCircleIcon fontSize="large" /> */}
+                                    // Else show login button
+                                    <div>
+                                        <IconButton edge="end" color="inherit" onClick={() => this.props.setScreen('LogIn')}>
+                                            {/* <AccountCircleIcon fontSize="large" /> */}
                                         Log In
                                     </IconButton>
-                                </div>
+                                    </div>
                             }
-
                         </div>
                     </Toolbar>
                 </div>
             </AppBar >
         )
-
-
     }
 }

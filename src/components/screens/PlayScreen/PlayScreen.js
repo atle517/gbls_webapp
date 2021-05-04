@@ -21,11 +21,13 @@ export default class PlayScreen extends Component {
 
     }
 
+    // On component mount, fetch highscores and ratings for all quizes
     componentDidMount = () => {
         this.fetchHighscores();
         this.fetchQuizRatings();
     }
 
+    // Fetches all highscores
     fetchHighscores = () => {
         const requestOptions = {
             method: 'GET',
@@ -37,12 +39,13 @@ export default class PlayScreen extends Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    highscores: data.sort((a, b) => parseInt(b.userScore) - parseInt(a.userScore)),
-                    userHighscores: this.getUserHighscores(data, this.props.userId)
+                    highscores: data.sort((a, b) => parseInt(b.userScore) - parseInt(a.userScore)), // Sorts all the highscores desc
+                    userHighscores: this.getUserHighscores(data, this.props.userId)                 // Gets the logged in users high scores
                 });
             });
     }
 
+    // Fetches all ratings
     fetchQuizRatings = () => {
         const requestOptions = {
             method: 'GET',
@@ -59,10 +62,12 @@ export default class PlayScreen extends Component {
             });
     }
 
+    // Returns a list with the logged in users highscores only
     getUserHighscores = (data, userId) => {
         return data.filter(d => d.userID == userId);
     }
 
+    // Returns the logged in users specific highscore for that quiz
     getUserHighscoreForQuiz = quizId => {
         let highscore = null;
 
@@ -75,16 +80,20 @@ export default class PlayScreen extends Component {
         return highscore;
     }
 
+    // Returns a list of top 5 highscores for a quiz
     getHighscoresForQuiz = quizId => {
         return this.state.highscores.filter(highscore => highscore.quizID === quizId).slice(0, 5);
     }
 
+    // Sets the selected quiz
     setSelectedQuiz = quiz => {
         this.setState({ selectedQuiz: quiz });
 
+        // Fetches the ratings for the selected quiz. This is done again for updating
         this.fetchQuizRatings();
     }
 
+    // Calculates the average rating for a quiz
     calculateAverageRating = quizId => {
         let totalRating = 0;
 
@@ -112,6 +121,7 @@ export default class PlayScreen extends Component {
                         <UIBlock>
                             <div className="PlayScreen-Main">
                                 <div className="PlayScreen-Quiz-List">
+                                    {/* Header */}
                                     <div className="LogInScreen-LogIn-Text" style={{ marginBottom: 20 }}>Quizs</div>
 
                                     {/* Quiz Table */}
@@ -122,6 +132,7 @@ export default class PlayScreen extends Component {
                                         <div className="PlayScreen-Header-Text" style={{ flex: 1, textAlign: 'center' }}>Highscore</div>
                                     </div>
 
+                                    {/* Shows all quizes */}
                                     {quizs.map(quiz => {
                                         return <QuizListItem
                                             key={quiz.quizID}
@@ -137,14 +148,17 @@ export default class PlayScreen extends Component {
                                 </div>
 
                                 <div className="PlayScreen-Quiz-Info">
+                                    {/* Header */}
                                     <div className="LogInScreen-LogIn-Text" style={{ marginBottom: 20 }}>{selectedQuiz ? selectedQuiz.quizName : "Select a quiz"}</div>
 
                                     <div style={{ width: '100%', height: '100%' }}>
+                                        {/* Description */}
                                         <div className="PlayScreen-Header-Text" style={{ fontSize: 20, textAlign: 'center' }}>Description:</div>
                                         <div className="PlayScreen-Quiz-Desc" style={{ height: 100, marginBottom: 5 }}>
                                             {selectedQuiz ? selectedQuiz.description : ""}
                                         </div>
 
+                                        {/* Highscores */}
                                         <div className="PlayScreen-Header-Text" style={{ fontSize: 20, textAlign: 'center' }}>Highscores:</div>
                                         <div className="PlayScreen-Quiz-Desc" style={{ height: 100, marginBottom: 5 }}>
                                             <table style={{ marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
@@ -160,10 +174,12 @@ export default class PlayScreen extends Component {
                                             </table>
                                         </div>
 
+                                        {/* Rating */}
                                         <div className="PlayScreen-Header-Text" style={{ fontSize: 20, textAlign: 'center' }}>Rating:</div>
                                         <RatingUI readOnly defaultValue={this.state.selectedQuiz !== null ? this.calculateAverageRating(this.state.selectedQuiz.quizID) : 0} />
                                     </div>
 
+                                    {/* Play Button */}
                                     {selectedQuiz &&
                                         <UIButton title={"Play!"} width={150} height={40} fontSize={32} onClick={() => this.props.startQuiz(selectedQuiz)} />
                                     }

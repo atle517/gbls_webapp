@@ -9,9 +9,11 @@ import tickSound from '../../../sounds/Tick.ogg'
 import correctSound from '../../../sounds/Correct.ogg'
 import wrongSound from '../../../sounds/Wrong.ogg'
 
+// Tick sound settings
 const tickSoundOn = true;
 const timeDuration = 30;
 
+// Ticking sound effect
 const tickSoundEffect = new UIfx(
     tickSound,
     {
@@ -20,6 +22,7 @@ const tickSoundEffect = new UIfx(
     }
 )
 
+// Correct sound effect
 const correctSoundEffect = new UIfx(
     correctSound,
     {
@@ -28,7 +31,7 @@ const correctSoundEffect = new UIfx(
     }
 )
 
-
+// Wrong sound effect
 const wrongSoundEffect = new UIfx(
     wrongSound,
     {
@@ -44,23 +47,25 @@ export default class QuizScreen extends Component {
         const { quiz } = this.props;
 
         this.state = {
-            questionId: 0,
-            currentQuestion: quiz.questions[0].questionText,
-            currentAnswers: quiz.questions[0].answers,
-            answered: false,
-            answeredButtonId: null,
-            points: 0,
-            rightAnswers: 0,
+            questionId: 0,                                          // Current questionId
+            currentQuestion: quiz.questions[0].questionText,        // Current question
+            currentAnswers: quiz.questions[0].answers,              // Current answers
+            answered: false,                                        // If question is in an answered state
+            answeredButtonId: null,                                 // Which answer the user selected
+            points: 0,                                              // Current points
+            rightAnswers: 0,                                        // How many right answers the user has gotten
 
         }
 
+        // Sets the tick time
         this.tickTime = timeDuration;
-        this.questionScore = quiz.score / quiz.questions.length;
 
-        console.log(quiz)
+        // Calculates how much an right answers max score should be
+        this.questionScore = quiz.score / quiz.questions.length;
 
     }
 
+    // Sets the next question
     setNextQuestion = () => {
         const { quiz } = this.props;
 
@@ -77,37 +82,47 @@ export default class QuizScreen extends Component {
 
     }
 
+    // Handles the users answer
     handleAnswer = (correct, buttonId) => {
         this.setState({
             answered: true,
             answeredButtonId: buttonId,
         })
 
+        // If correct, play correct sound effect and add points
         if (correct) {
             correctSoundEffect.play();
 
+            // Adds points depending on how fast the player answers
             this.addPoints(parseInt(this.questionScore * (this.tickTime / timeDuration)));
 
         } else {
             wrongSoundEffect.play();
         }
 
+        // Creates a 2 second pause until the next question is shown, or the QuizDone scren is shown
         const nextQuestionInterval = setInterval(() => {
+
+            // If more questions, show next question
             if (this.state.questionId + 1 < this.props.quiz.questions.length) {
                 this.setNextQuestion();
             } else {
+                // Else finish the quiz
                 this.finishQuiz();
             }
 
+            // Remove the timer
             clearInterval(nextQuestionInterval);
         }, 2000);
 
     }
 
+    // Finishes the quiz
     finishQuiz = () => {
         this.props.answeredQuiz(this.state.points, this.state.rightAnswers, this.props.quiz)
     }
 
+    // Adds points to the users score
     addPoints = points => {
         this.setState(prevState => ({
             points: prevState.points + points,
@@ -115,6 +130,7 @@ export default class QuizScreen extends Component {
         }));
     }
 
+    // Sets the right answer and wrong answer button color
     showButtonColor = (correct, buttonId) => {
         if (correct) {
             return "lime";
@@ -127,6 +143,7 @@ export default class QuizScreen extends Component {
         return "";
     }
 
+    // Plays the tick sound and sets the time for every second
     timeTick = time => {
         if (time != this.tickTime) {
             if (tickSoundOn) tickSoundEffect.play();
@@ -135,6 +152,7 @@ export default class QuizScreen extends Component {
         }
     }
 
+    
     render() {
         const { currentQuestion, currentAnswers, answered } = this.state;
         const { quiz } = this.props;

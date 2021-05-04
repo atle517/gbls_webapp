@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 
+// Style
 const StyledRating = withStyles({
     iconFilled: {
         color: '#ffe600',
@@ -11,7 +12,6 @@ const StyledRating = withStyles({
         color: '#fffb00',
     },
 })(Rating);
-
 
 
 export default class RatingUI extends Component {
@@ -23,6 +23,7 @@ export default class RatingUI extends Component {
                     alignItems="center"
                     justifyContent="center"
                 >
+                    {/* If read only, then show a rating where user cant click */}
                     {this.props.readOnly &&
                         <StyledRating
                             name="half-rating"
@@ -34,6 +35,7 @@ export default class RatingUI extends Component {
                         />
                     }
 
+                    {/* If not read only, then show a rating where user can click */}
                     {!this.props.readOnly &&
                         <StyledRating
                             name="half-rating"

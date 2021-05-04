@@ -3,6 +3,7 @@ import './UIButton.css';
 
 export default class UIButton extends Component {
 
+    // Adjust the font size for the button
     adjustFontSize = (text) => {
 
         let size = 64 - (text.length * 2);
@@ -15,8 +16,6 @@ export default class UIButton extends Component {
     render() {
 
         const { title, width, height, fontSize, onClick, autoAdjustFontSize, marginWidth, marginHeight, color } = this.props;
-
-        
 
         return (
             <div className="UIButton-Container"

@@ -58,10 +58,12 @@ export default class RegisterScreen extends Component {
         }
     }
 
+    // Register is successful, logs in the user
     succesful = userData => {
         this.props.login(userData.username, userData.userID);
     }
 
+    // Checks the passwords strength
     CheckPasswordStrength = password => {
 
         //Regular Expressions
@@ -135,11 +137,13 @@ export default class RegisterScreen extends Component {
                 { props => (
                     <div style={props}>
                         <UIBlock>
+                            {/* Header */}
                             <div className="LogInScreen-LogIn-Text">Register</div>
 
                             <br />
 
                             <form onSubmit={this.handleSubmit}>
+                                {/* Username */}
                                 <div className="LogInScreen-Text">Username</div>
                                 <TextField
                                     id="outlined-required"
@@ -149,7 +153,7 @@ export default class RegisterScreen extends Component {
                                     onChange={e => this.setState({ username: e.target.value })}
                                 />
 
-
+                                {/* Password */}
                                 <div className="LogInScreen-Text">Password</div>
                                 <TextField
                                     id="outlined-required"
@@ -161,22 +165,20 @@ export default class RegisterScreen extends Component {
                                         this.setState({
                                             password: e.target.value
                                         });
-                                        this.CheckPasswordStrength(e.target.value);
+                                        this.CheckPasswordStrength(e.target.value); // Checks the password strength
                                     }}
                                 />
+                                {/* Shows the password strength */}
                                 {this.state.passwordStrength !== '' && <div className="LogInScreen-Text" style={{ color: this.state.passwordStrengthColor, textAlign: 'center' }}>{this.state.passwordStrength}</div>}
-
 
                                 <br />
 
+                                {/* Shows potential error message */}
                                 {this.state.errorMessage !== '' && <div className="LogInScreen-Text" style={{ color: 'red', textAlign: 'center' }}>{this.state.errorMessage}</div>}
 
                                 <br />
 
-                                {/* <Button type="submit" variant="contained" disableElevation color="primary" style={{ backgroundColor: '#3396FF' }}>
-                                    Register
-                                </Button> */}
-
+                                {/* Register button */}
                                 <UIButton title={"Register"} fontSize={24} onClick={this.handleSubmit} />
                             </form>
                         </UIBlock>
