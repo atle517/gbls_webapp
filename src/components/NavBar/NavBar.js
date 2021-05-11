@@ -16,12 +16,22 @@ export default class NavBar extends Component {
 
                         {/* About button */}
                         <div className="NavBar-End">
-                            <div>
+                        <div>
                                 <IconButton color="inherit"
                                     target="_blank" href="https://web01.usn.no/~222027/"
                                 >
                                     {/* <InfoIcon fontSize="large" /> */}
                                     About
+                                </IconButton>
+                            |
+                            </div>
+
+                            <div>
+                                <IconButton color="inherit"
+                                    target="_blank" href="https://createquizazure.azurewebsites.net/"
+                                >
+                                    {/* <InfoIcon fontSize="large" /> */}
+                                    Create a quiz
                                 </IconButton>
                             |
                             </div>
